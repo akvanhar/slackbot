@@ -62,11 +62,11 @@ class slackbot(object):
 	def reply(self, message, channel):
 		# when drunkoctopus is mentioned, return a message
 
-		if message in ['stress', 'stressed', 'stressful']:
+		if ('stress' in message) or ('stressed' in message) or ('stressful' in message):
 			reply = "It's going to be okay. Let's have some wine!"
 			self.slack_client.rtm_send_message(channel, reply)
 		
-		elif message in ['5:00', '5:30', "I'm going home"]:
+		elif ('5:00' in message) or ('5:30' in message) or ("I'm going home" in message):
 			reply = "It's beer-o-clock!"
 			self.slack_client.rtm_send_message(channel, reply)
 
