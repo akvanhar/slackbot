@@ -83,16 +83,8 @@ class slackbot(object):
 			reply = "I'd like some, please!"
 			self.slack_client.rtm_send_message(channel, reply)
 		elif 'picture' in message:
-			reply = {
-   				"attachments": [
-        			{
-            		"fallback": "Silly drunkoctopus.",
-            		"text": "Sure! Here's a picture of me at a bar.",
-            		"image_url": "http://i.imgur.com/AICvMCj.jpg",
-        			}
-    				]
-			}
-
+			reply = ("Sure! Here's a picture of me at a bar." + 
+            		"http://i.imgur.com/AICvMCj.jpg")
 
 		else:
 			reply = "Oh hi!"
