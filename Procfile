@@ -1,1 +1,1 @@
-web: python drunkoctopus.py
+worker: python drunkoctopus.py

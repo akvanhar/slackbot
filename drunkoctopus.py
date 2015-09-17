@@ -5,32 +5,6 @@ from slackclient import SlackClient
 
 DO_ALY_CHAN = "D0AQXL0CX"
 
-# sc = SlackClient(TOKEN)
-
-# From: https://medium.com/@julianmartinez/how-to-write-a-slack-bot-end-to-end-d6a8542c854b
-# greeting = "Hello elevensies!\nLet's have some wine!"
-# print sc.api_call("chat.postMessage",
-# 	              as_user = True,
-# 	              channel = DO_ALY_CHAN,
-# 	              text = greeting)
-
-# while True:
-# 	new_evts = sc.rtm_read()
-# 	for evt in new_evts:
-# 		print evt
-# 		if "type" in evt:
-# 			if evt["type"] == "message" and "text" in evt:
-# 				message = evt["text"]
-# 		time.sleep(3)
-
-
-# if sc.rtm_connect():
-# 	while True:
-# 		print sc.rtm_read()
-# 		time.sleep(1)
-# else:
-# 	print "Connection failed, invalid token?"
-
 class slackbot(object):
 	# a class for fun slackbots
 
