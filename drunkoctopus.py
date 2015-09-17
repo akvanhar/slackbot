@@ -46,7 +46,7 @@ class slackbot(object):
 
 	def get_events(self):
 		# get all events from the RTM API
-		# Is drunkoctopus mentioned?
+		# Is drunkoctopus or a keyword mentioned?
 
 		while True:
 			new_evts = self.slack_client.rtm_read()
@@ -55,6 +55,9 @@ class slackbot(object):
 				if evt.get('type') == 'message':
 					message = evt.get('text')
 					if 'drunkoctopus' in message:
+						channel = evt.get('channel')
+						self.reply(message, channel)
+					if 'wine' in message:
 						channel = evt.get('channel')
 						self.reply(message, channel)
 				time.sleep(3)
@@ -68,6 +71,10 @@ class slackbot(object):
 		
 		elif ('5:00' in message) or ('5:30' in message) or ("I'm going home" in message):
 			reply = "It's beer-o-clock!"
+			self.slack_client.rtm_send_message(channel, reply)
+
+		elif ('wine' in message) or ('beer' in message) or ('cocktail' in message):
+			reply = "I'd like some!"
 			self.slack_client.rtm_send_message(channel, reply)
 
 		else:
