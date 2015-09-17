@@ -1,9 +1,24 @@
 import os
 import time
+import random
 from slackclient import SlackClient
 
-
 DO_ALY_CHAN = "D0AQXL0CX"
+
+possible_replies = {
+	'wine': "I'd like some too!",
+	'beer': "Hook an octopus up!",
+	'cocktail': "My favorite cocktail is a dark and stormy",
+	"stress": "Hang in there.",
+	"stressful": "It's going to be okay. Let's have a glass of wine.",
+	"stressed": "You got this.",
+	"picture": "Here's one of me! http://i.imgur.com/AICvMCj.jpg",
+	"silly": ["http://giphy.com/gifs/pixel-art-octopus-PxdWYostrUcz6", 
+			  "http://giphy.com/gifs/lol-octopus-hehehe-ZW9ufudBCnqyk",
+			  "http://giphy.com/gifs/funny-banana-ISaEiQgQ6F81a"],
+	"5:00": "It's beer-o-clock!",
+	"5:30": "It's beer-o-clock!",
+}
 
 class slackbot(object):
 	# a class for fun slackbots
@@ -30,34 +45,39 @@ class slackbot(object):
 					message = evt.get('text')
 					if 'drunkoctopus' in message:
 						channel = evt.get('channel')
-						self.reply(message, channel)
+						self.reply(message, DO_ALY_CHAN)
 					if 'wine' in message:
 						channel = evt.get('channel')
-						self.reply(message, channel)
+						self.reply(message, DO_ALY_CHAN)
 					if 'beer' in message:
 						channel = evt.get('channel')
-						self.reply(message, channel)
-					if 'cocktail\*' in message:
+						self.reply(message, DO_ALY_CHAN)
+					if 'cocktail' in message:
 						channel = evt.get('channel')
-						self.reply(message, channel)
-				time.sleep(3)
+						self.reply(message, DO_ALY_CHAN)
+				time.sleep(1)
 
 	def reply(self, message, channel):
 		# when drunkoctopus is mentioned, return a message
-
-		if ('stress' in message) or ('stressed' in message) or ('stressful' in message):
-			reply = "It's going to be okay. Let's have some wine!"
-			self.slack_client.rtm_send_message(channel, reply)
-		
-		elif ('5:00' in message) or ('5:30' in message) or ("I'm going home" in message):
+		if message == "drunkoctopus: ":
+			reply = "Oh hi! Let's fight!"
+		elif "I'm going home" in message:
 			reply = "It's beer-o-clock!"
-			self.slack_client.rtm_send_message(channel, reply)
+		elif "I'll miss you" in message:
+			reply = "Awwww. You guys are the best."
+		else:
+			words_in_message = message.split(' ')
+			for word in words_in_message:
+				reply = possible_replies.get('word')
+				if reply:
+					if type(reply) is list:
+						reply = random.choice(reply)
+					break
+		self.slack_client.rtm_send_message(channel, reply)
 
-		elif ('wine' in message) or ('beer' in message) or ('cocktail' in message):
-			reply = "I'd like some, please!"
-			self.slack_client.rtm_send_message(channel, reply)
-		elif 'picture' in message:
-			reply = "Sure! Here's a picture of me at a bar. http://i.imgur.com/AICvMCj.jpg"
+		# not single word arguements:
+		# "I'm going home": "It's beer-o-clock!"
+		# "I'll miss you": "Awwww. You guys are the best",
 
 		else:
 			reply = "Oh hi!"
