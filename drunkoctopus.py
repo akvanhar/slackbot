@@ -87,6 +87,7 @@ class slackbot(object):
    				"attachments": [
         			{
             		"fallback": "Silly drunkoctopus.",
+            		"text": "Sure! Here's a picture of me at a bar.",
             		"image_url": "http://i.imgur.com/AICvMCj.jpg",
         			}
     				]
