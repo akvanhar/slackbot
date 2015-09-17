@@ -1,6 +1,7 @@
 import os
 import time
 import random
+import re
 from slackclient import SlackClient
 
 DO_ALY_CHAN = "D0AQXL0CX"
@@ -45,20 +46,21 @@ class slackbot(object):
 					message = evt.get('text')
 					if 'drunkoctopus' in message:
 						channel = evt.get('channel')
-						self.reply(message, DO_ALY_CHAN)
+						self.reply(message, channel)
 					if 'wine' in message:
 						channel = evt.get('channel')
-						self.reply(message, DO_ALY_CHAN)
+						self.reply(message, channel)
 					if 'beer' in message:
 						channel = evt.get('channel')
-						self.reply(message, DO_ALY_CHAN)
+						self.reply(message, channel)
 					if 'cocktail' in message:
 						channel = evt.get('channel')
-						self.reply(message, DO_ALY_CHAN)
+						self.reply(message, channel)
 				time.sleep(1)
 
 	def reply(self, message, channel):
 		# when drunkoctopus is mentioned, return a message
+		# look message words up in the drunkoctopus dictionary
 		
 		if "going home" in message:
 			reply = "It's beer-o-clock!"
@@ -71,20 +73,21 @@ class slackbot(object):
 			print words_in_message
 			for word in words_in_message:
 				print word
+				word = word.rstrip('.?!,:')
 				reply = possible_replies.get(word)
 				print reply
 				if reply:
 					if type(reply) is list:
 						reply = random.choice(reply)
 						print reply
-						break
-					break
-				else:
-					reply = "Oh hi! Let's fight!"
-		
-		self.slack_client.rtm_send_message(channel, reply)
-
-
+						self.slack_client.rtm_send_message(channel, reply)
+						return
+					self.slack_client.rtm_send_message(channel, reply)
+					return
+			else:
+				reply = "Oh hi! Let's fight!"
+				self.slack_client.rtm_send_message(channel, reply)
+				return
 
 if __name__ == "__main__":
 	
