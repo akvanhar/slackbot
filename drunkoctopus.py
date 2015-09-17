@@ -60,6 +60,12 @@ class slackbot(object):
 					if 'wine' in message:
 						channel = evt.get('channel')
 						self.reply(message, channel)
+					if 'beer' in message:
+						channel = evt.get('channel')
+						self.reply(message, channel)
+					if 'cocktail\*' in message:
+						channel = evt.get('channel')
+						self.reply(message, channel)
 				time.sleep(3)
 
 	def reply(self, message, channel):
@@ -74,8 +80,18 @@ class slackbot(object):
 			self.slack_client.rtm_send_message(channel, reply)
 
 		elif ('wine' in message) or ('beer' in message) or ('cocktail' in message):
-			reply = "I'd like some!"
+			reply = "I'd like some, please!"
 			self.slack_client.rtm_send_message(channel, reply)
+		elif 'picture' in message:
+			reply = {
+   				"attachments": [
+        			{
+            		"fallback": "Silly drunkoctopus.",
+            		"image_url": "http://i.imgur.com/AICvMCj.jpg",
+        			}
+    				]
+			}
+
 
 		else:
 			reply = "Oh hi!"
