@@ -59,29 +59,30 @@ class slackbot(object):
 
 	def reply(self, message, channel):
 		# when drunkoctopus is mentioned, return a message
-		if message == "drunkoctopus: ":
-			reply = "Oh hi! Let's fight!"
-		elif "I'm going home" in message:
+		
+		if "going home" in message:
 			reply = "It's beer-o-clock!"
+		
 		elif "I'll miss you" in message:
 			reply = "Awwww. You guys are the best."
-		else:
+		
+		else: 
 			words_in_message = message.split(' ')
+			print words_in_message
 			for word in words_in_message:
-				reply = possible_replies.get('word')
+				print word
+				reply = possible_replies.get(word)
+				print reply
 				if reply:
 					if type(reply) is list:
 						reply = random.choice(reply)
+						print reply
+						break
 					break
+				else:
+					reply = "Oh hi! Let's fight!"
+		
 		self.slack_client.rtm_send_message(channel, reply)
-
-		# not single word arguements:
-		# "I'm going home": "It's beer-o-clock!"
-		# "I'll miss you": "Awwww. You guys are the best",
-
-		else:
-			reply = "Oh hi!"
-			self.slack_client.rtm_send_message(channel, reply)
 
 
 
